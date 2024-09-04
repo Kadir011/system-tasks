@@ -3,10 +3,8 @@ import json
 
 def search_task(task_list):
     entrance = input('Enter the word or index: ')
-
     if entrance.isdigit():
         num_task = int(entrance)
-
         if 1 <= num_task <= len(task_list):
             return task_list[num_task - 1]
         else:
@@ -24,7 +22,7 @@ def search_task(task_list):
         return None
 
 def save_tasks_to_json(task_list):
-    with open('task_info.json', 'w', encoding='utf-8') as file:
+    with open('task_info.json', 'w', encoding='utf-8', errors='replace') as file:
         data = {str(i + 1): task for i, task in enumerate(task_list)}
         json.dump(data, 
                   file, 
@@ -35,7 +33,9 @@ def load_tasks_from_json():
     if os.path.exists('task_info.json'):
         with open('task_info.json', 'r', encoding='utf-8', errors='replace') as file:
             return list(json.load(file).values())
-    return []
+            
+    task_list = []
+    return task_list
 
 def show_tasks(task_list):
     if not task_list:
